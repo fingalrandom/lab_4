@@ -1,3 +1,4 @@
+import sys
 from PIL import Image, ImageDraw
 def encrypt(nameIM, TXT):
 	try:
@@ -70,3 +71,29 @@ def decrypt(nameIM):
 		tmp = tmp + cur
 		curHeig = curHeig + 1
 	return tmp
+def main():
+	print "Example of main string for encode[-c]:"
+	print "[*.py] [input file name] [container file name] [out file name]"
+	print "Example of main string for decode[-d]:"
+	print "[*.py] [container file name] [result file name]"
+	
+	countPar = len(sys.argv)
+	if countPar == 4:
+		inFileName = sys.argv[1]
+		contFileName = sys.argv[2]
+		outFileName = sys.argv[3]
+		with open(inFileName, 'r') as inFile:
+			TXT = inFile.read()
+		rez = encrypt(contFileName, TXT)
+		rez.save(outFileName, "BMP")
+	elif countPar == 3:
+		contFileName = sys.argv[1]
+		rezFileName = sys.argv[2]
+		rez = decrypt(contFileName)
+		with open(rezFileName, 'w') as rezFile:
+			rezFile.write(rez)
+	else:
+		print "There is wrong number of parameters."
+		exit()
+if __name__ == "__main__":
+    main()
