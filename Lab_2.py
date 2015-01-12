@@ -1,3 +1,4 @@
+import sys
 def SybButes(mas, inv):
 	if not inv:
 		sbox = [
@@ -226,3 +227,33 @@ def crypt(TXT, KEY, inv):
 				res2 += rez[i]
 			return res2
 	return rez
+def main():
+	print "Example of main string:"
+	print "[*.py] [input file name] [key file name] [result file name] [encode or decode]"
+	print "	""-c"" - encode"
+	print "	""-d"" - decode"
+	countPar = len(sys.argv)
+	if (countPar != 5):
+		print "There is wrong number of parameters."
+		exit()
+	if(sys.argv[4] != "-c" and sys.argv[4] != "-d"):
+		print "irregular operation"
+		exit()
+
+	inFileName = sys.argv[1]
+	keyFileName = sys.argv[2]
+	rezFileName = sys.argv[3]
+	fl = sys.argv[4]
+
+	with open(inFileName, 'r') as inFile:
+		TXT = inFile.read()
+	with open(keyFileName, 'r') as keyFile:
+		KEY = keyFile.read()
+	if fl == '-c':
+		rez = crypt(TXT, KEY, False)
+	else:
+		rez = crypt(TXT, KEY, True)
+	with open(rezFileName, 'w') as rezFile:
+		rezFile.write(rez)
+if __name__ == "__main__":
+    main()
